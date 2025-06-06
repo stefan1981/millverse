@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  phaser-app:
+    build: .
+    container_name: "pathoptimizer"
+    restart: always
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pathoptimizer.rule=Host(`pathoptimizer.zahl1.de`)"
+      - "traefik.http.routers.pathoptimizer.entrypoints=websecure"
+      - "traefik.http.routers.pathoptimizer.tls.certresolver=myresolver"
+    networks:
+      - dbstack
+# -----------------------------------------------
+networks:
+  dbstack:
+    name: "dbstack"
+    external: true

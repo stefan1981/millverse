@@ -1,0 +1,18 @@
+# directory for env files
+.env
+
+# exclude node_mosules (wherever they are)
+**/node_modules/
+
+backup/*
+nocodb/
+
+# python
+.idea/
+.direnv/
+qdrant_data/
+__pycache__/
+*.pyc
+*.gpkg
+
+acme.json

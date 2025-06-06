@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "id": "01.11.0",
+      "keywords": "Ackerbohnen, Anbau, Bohnen, Anbau, Dicke Bohnen, Anbau, Erbsen, Anbau, Erdnüsse, Anbau, Felderbsen, Erzeugung, Gerste, Anbau, Getreide, Anbau, Getreidebau, Hafer, Anbau, Hülsenfrüchte (trockene, ausgelöste; nicht Hülsengemüse), Erzeugung, Körnermais, Anbau, Mais (Körnermais), Anbau, Ölsaaten, Anbau, Pellets aus Stroh (Futtermittel / Heizmaterial), Herstellung, Puffbohnen, Anbau, Raps, Anbau, Roggen, Anbau, Sämereien (Anbau von Ölsaaten), Saubohnen, Anbau, Sojabohnen, Anbau, Weizen, Anbau",
+      "text": "Diese Unterklasse umfasst alle Arten des Anbaus von Getreide, Hülsenfrüchten und Ölsaaten im Freiland. Diese Pflanzen werden in landwirtschaftlichen Betrieben häufig nebeneinander angebaut.\n\nDiese Unterklasse umfasst:\n– Anbau von Getreide:\n* Weizen\n* Körnermais\n* Sorghum\n* Gerste\n* Roggen\n* Hafer\n* Hirse\n* Triticale\n* sonstiges Getreide a. n. g.\n– Anbau von Hülsenfrüchten:\n* Bohnen\n* Puffbohnen\n* Kuhbohnen\n* Linsen\n* Lupinen\n* Erbsen, Straucherbsen, Kichererbsen\n* sonstige Hülsenfrüchte\n– Anbau von Ölsaaten:\n* Sojabohnen\n* Erdnüsse\n* Baumwollsaat\n* Rizinussamen\n* Leinsamen\n* Senfkörner\n* Nigersaat\n* Rapssamen\n* Saflorsaat\n* Sesamsamen\n* Sonnenblumenkerne\n* andere Ölsaaten Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.12.0",
+      "keywords": "Reis, Anbau",
+      "text": " Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.13.1",
+      "keywords": "Auberginen, Anbau, Champignons, Anbau, Champignonzucht, Erwerbsgartenbau (Gemüsebau), Feldgemüseanbau, Gartenbau (Gemüsebau), Gemüse, Anbau, Gemüsebau (nicht Erzeugung von Gartenbausämereien), Hackfruchtbau (Erzeugung von Zuckerrüben), Honigmelonen, Anbau, Karotten, Anbau, Kohl, Anbau, Kohlrabi, Anbau, Kulturpilze, Anbau, Lauch, Anbau, Melonen, Anbau, Möhren, Anbau, Paprika, Anbau, Pilzanbau, Pilzaufzucht, Salat, Anbau, Sämereien (nur Anbau von Saatgut für Zuckerrüben), Schnittlauch, Anbau, Spargel, Anbau, Speisezwiebeln, Anbau, Tomaten, Anbau, Urban farming (Gemüseanbau), Urban gardening (Gemüseanbau), Wassermelonen, Anbau, Zucchini, Anbau, Zuckermais, Anbau, Zuckermelonen, Anbau, Zuckerrüben, Anbau, Zuckerrübensamen, Anbau (jedoch ohne Saatgut für sonstige Rüben), Zwiebeln (Speisezwiebeln), Anbau",
+      "text": "Diese Unterklasse umfasst:\n– Anbau von Blatt- oder Stängelgemüse:\n* Artischocken\n* Spargel\n* Kohl\n* Blumenkohl und Broccoli\n* Kopfsalat und Chicorée\n* Spinat\n* anderes Blatt- oder Stängelgemüse\n– Anbau von Fruchtgemüse:\n* Gurken und Cornichons\n* Auberginen\n* Tomaten\n* Wassermelonen\n* Zuckermelonen/Honigmelonen\n* sonstige Melonen und sonstiges Fruchtgemüse\n– Anbau von Wurzel-, Zwiebel- oder Knollengemüse:\n* Möhren\n* Speiserüben\n* Knoblauch\n* Zwiebeln (einschl. Schalotten)\n* Porree/Lauch und andere Gemüse der Allium-Arten\n* sonstiges Wurzel-, Zwiebel- oder Knollengemüse\n– Anbau von Pilzen und Trüffeln\n– Anbau von Gemüsesamen einschließlich Saatgut für Zuckerrüben, jedoch ohne Saatgut für sonstige Rüben\n– Anbau von Zuckerrüben\n– Anbau von sonstigem Gemüse Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.13.2",
+      "keywords": "Hackfruchtbau (Erzeugung von Kartoffeln), Kartoffeln, Anbau, Kassava, Anbau, Knollen, Anbau, Maniok, Anbau, Yamswurzeln, Anbau",
+      "text": "Diese Unterklasse umfasst:\n– Anbau von Wurzeln und Knollen:\n* Kartoffeln\n* Süßkartoffeln, Bataten\n* Maniok, Kassava\n* Yamswurzeln\n* sonstige Wurzeln und Knollen Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.14.0",
+      "keywords": "Anbau von Zuckerrohr, Zuckerrohr, Anbau",
+      "text": " Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.15.0",
+      "keywords": "Rohtabak, Erzeugung, Tabak, Anbau",
+      "text": " Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.16.0",
+      "keywords": "Abaca, Anbau, Anbau textiler Bastfasern, Anbau von pflanzlichen Spinnstoffen, Anbau von textilen Agavefasern, Baumwolle, Anbau, Faserpflanzen, Anbau, Faserpflanzen, Erzeugung, Flachs, roher, Anbau, Flachsröste, Hanf, roher, Anbau, Jute, Anbau, Kenaf, Anbau, Ramie, Anbau, Sisal, Anbau, Textilpflanzen, Anbau",
+      "text": "Diese Unterklasse umfasst:\n– Anbau von Baumwolle\n– Anbau von Jute, Kenaf und sonstigen textilen Bastfasern\n– Anbau von Flachs und Hanf\n– Anbau von Sisal und sonstigen textilen Agavefasern\n– Anbau von Abaca, Ramie und sonstigen pflanzlichen Spinnstoffen\n– Anbau sonstiger Faserpflanzen Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.19.1",
+      "keywords": "Binderei von Blumen und Pflanzen (nicht Blumenhandel), Blumen, Anbau, Blumenbinderei (nicht Blumenhandel), Blumengestecke, Herstellung, Blumenzucht, Blumenzwiebeln, Anbau, Erwerbsgartenbau (Zierpflanzenbau), Floristische Gestaltung (Herstellung von Blumengestecken aus Zierpflanzen), Gartenbau (Zierpflanzenbau), Gestecke aus Trockenblumen, Herstellung, Jungpflanzen (Zierpflanzen), Anbau, Kranzbinderei (nicht Blumenhandel), Kränze aus Blumen, Herstellung, Schnittblumen, Anbau, Schnittgrün, Anbau, Topfpflanzen (einjährige), Anbau, Trauerbinderei (nicht Blumenhandel), Trockenblumengestecke, Herstellung, Zierpflanzen (einjährige;nicht Ziergehölze), Erzeugung, Zwiebeln von Blumen, Erzeugung",
+      "text": "Diese Unterklasse umfasst:\n– Anbau von Blumen, Erzeugung von Schnittblumen und Blütenknospen Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.19.2",
+      "keywords": "Blumensamen, Erzeugung, Gartenbausämereien (Blumensamen), Erzeugung, Grassamen, Herstellung, Sämereien (Erzeugung von Blumensamen)",
+      "text": "Diese Unterklasse umfasst:\n– Erzeugung von Blumensamen Anbau einjähriger Pflanzen"
+    },
+    {
+      "id": "01.19.9",
+      "keywords": "Anbau von sonstigen einjährigen Pflanzen anderweitig nicht genannt, Futtermais, Anbau, Futterpflanzensamen, Erzeugung, Graspellets, Herstellung, Pellets aus Heu (Futtermittel), Herstellung, Sämereien (Anbau von sonstigen einjährigen Pflanzen)",
+      "text": "Diese Unterklasse umfasst:\n– Anbau von Steckrüben, Futterrüben, Wurzeln zu Futterzwecken, Klee, Luzerne, Esparsette, Futtermais und sonstige Gräser, Futterkohl und ähnliches Futter\n– Anbau von Buchweizen\n– Erzeugung von Samen von Rüben (außer von Zuckerrüben) und von Futterpflanzen Anbau einjähriger Pflanzen"
+    }
+  ]
+}

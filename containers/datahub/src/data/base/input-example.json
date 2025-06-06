@@ -1,0 +1,14 @@
+{
+    "data": [
+        {
+            "id": "first id",
+            "keywords": "bla, foo, baz1",
+            "text": "this is an 1 example"
+        },
+        {
+            "id": "second id",
+            "keywords": "bla, foo, baz2",
+            "text": "this is an 2 example"
+        }
+    ]
+}

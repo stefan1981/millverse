@@ -1,0 +1,257 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 3,
+    "links": [],
+    "panels": [
+      {
+        "datasource": {
+          "default": false,
+          "type": "mysql",
+          "uid": "P2D8D6C9E07EED33B"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 11,
+          "w": 11,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "11.2.0",
+        "targets": [
+          {
+            "dataset": "general",
+            "datasource": {
+              "type": "mysql",
+              "uid": "P2D8D6C9E07EED33B"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT SUBSTR(leika_code, 3, 3) as \"Leistungsschlüssel (Stelle 3-5)\", service_group as \"Text der Leistungsgruppierung\"\nFROM general.leika_codes\nGROUP BY service_group",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Liste der Leistungsgruppierungen",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "name": "mariaDbProvisioning",
+          "type": "mysql",
+          "uid": "P2D8D6C9E07EED33B"
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 13,
+          "x": 11,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "# Leika - Leistungskatalog\n\n[Wikipedia über Leika](https://de.wikipedia.org/wiki/LeiKa#:~:text=Der%20LeiKa%2DSchl%C3%BCssel%20ist%20eine,deren%20Herkunft%20verwendet%20werden%20kann.)\n\n![Schlüsselsystematik](https://upload.wikimedia.org/wikipedia/de/0/07/LeiKa-Schl%C3%BCssel2.0.GIF)",
+          "mode": "markdown"
+        },
+        "pluginVersion": "11.2.0",
+        "targets": [
+          {
+            "dataset": "general",
+            "datasource": {
+              "type": "mysql",
+              "uid": "P2D8D6C9E07EED33B"
+            },
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "",
+            "refId": "A"
+          }
+        ],
+        "title": "Leika Übersicht",
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "default": false,
+          "type": "mysql",
+          "uid": "P2D8D6C9E07EED33B"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 11,
+          "w": 11,
+          "x": 0,
+          "y": 11
+        },
+        "id": 3,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "11.2.0",
+        "targets": [
+          {
+            "dataset": "general",
+            "datasource": {
+              "type": "mysql",
+              "uid": "P2D8D6C9E07EED33B"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT SUBSTR(leika_code, 9, 3) as \"Leistungsschlüssel (Stelle 9-11)\", area_of_work as Text\nFROM general.leika_codes\nGROUP BY area_of_work\nORDER BY SUBSTR(leika_code, 9, 3)",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Liste der Verrichtungskennungen",
+        "type": "table"
+      }
+    ],
+    "schemaVersion": 39,
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "Leika Übersicht",
+    "uid": "de313czp9reo0b",
+    "version": 1,
+    "weekStart": ""
+  }

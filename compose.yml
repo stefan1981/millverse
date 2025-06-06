@@ -1,0 +1,123 @@
+
+# For configuring the https certs look into traefik_dynamic_conf.yml
+
+services:
+# --------------------------------------------------------------------------------------------
+  millverse-postgres:
+    image: ankane/pgvector:v0.5.1
+    container_name: "${PROJECT_NAME}-postgres"
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init-scripts/init-postgres:/docker-entrypoint-initdb.d
+    labels:
+      traefik.enable: true
+      traefik.tcp.routers.postgres.entrypoints: sql
+      traefik.tcp.routers.postgres.rule: HostSNI(`postgres.local`)
+      traefik.tcp.services.postgres.loadbalancer.server.port: 5432
+    networks:
+      - dbstack
+# --------------------------------------------------------------------------------------------
+  millverse-grafana:
+    image: grafana/grafana:11.2.0
+    container_name: "${PROJECT_NAME}-grafana"
+    env_file: .env
+    volumes: 
+      - ./containers/grafana/provisioning:/etc/grafana/provisioning
+      - ./containers/grafana/maps:/usr/share/grafana/public/maps
+    environment:
+        #- GF_AUTH_ANONYMOUS_ENABLED=true
+       - GF_SECURITY_ADMIN_USER=${POSTGRES_USER}
+       - GF_SECURITY_ADMIN_PASSWORD=${POSTGRES_PASSWORD}
+       #- GF_INSTALL_PLUGINS=       
+       - GF_SERVER_DOMAIN=${PROJECT_NAME}-grafana.${GENERAL_URL}
+       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+       - GF_DASHBOARDS_MIN_REFRESH_INTERVAL=1s
+      #  - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/
+    labels:
+      traefik.enable: true
+      traefik.http.routers.grafana.rule: "Host(`${PROJECT_NAME}-grafana.${GENERAL_URL}`)"
+      traefik.http.routers.grafana.entrypoints: websecure
+      traefik.http.routers.grafana.tls.certresolver: myresolver
+    depends_on:
+      - millverse-postgres
+    networks:
+      - dbstack
+# --------------------------------------------------------------------------------------------
+  millverse-pathoptimizer:
+    build:
+      context: ./containers/pathoptimizer
+      dockerfile: Dockerfile
+    container_name: "${PROJECT_NAME}-pathoptimizer"
+    ports:
+      - "5173:5173"
+    volumes: 
+      - ./containers/pathoptimizer/package-lock.json:/app/package-lock.json
+      - ./containers/pathoptimizer/package.json:/app/package.json
+      - ./containers/pathoptimizer/src:/app/src
+    # environment:
+    #   - NODE_ENV=development
+    env_file: .env      
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pathoptimizer.rule=Host(`${PROJECT_NAME}-pathoptimizer.${GENERAL_URL}`)"
+      - "traefik.http.routers.pathoptimizer.entrypoints=websecure"
+      - "traefik.http.routers.pathoptimizer.tls.certresolver=myresolver"
+    networks:
+      - dbstack
+  # --------------------------------------------------------------------------------------------
+  millverse-datahub:
+    build:
+      context: ./containers/datahub
+      dockerfile: Dockerfile
+    image: datahub
+    container_name: "${PROJECT_NAME}-datahub"
+    volumes: 
+      - ./containers/datahub/package-lock.json:/app/package-lock.json
+      - ./containers/datahub/package.json:/app/package.json
+      - ./containers/datahub/src:/app/src
+    env_file: .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.datahub.rule=Host(`${PROJECT_NAME}-datahub.${GENERAL_URL}`)"
+      - "traefik.http.routers.datahub.entrypoints=websecure"
+      - "traefik.http.routers.datahub.tls.certresolver=myresolver"
+    networks:
+        - dbstack 
+    #extra_hosts:
+    #    - "docker.host.internal:host-gateway"
+# --------------------------------------------------------------------------------------------
+  # millverse-nocodb:
+  #    image: nocodb/nocodb:0.260.7
+  #    container_name: "${PROJECT_NAME}-nocodb"
+  #    volumes:
+  #      - "./nocodb:/usr/app/data"    
+  #    env_file: .env
+  #    environment:
+  #        UPLOAD_LIMIT: 300M
+  #    labels:
+  #        - "traefik.enable=true"
+  #        - "traefik.http.routers.nocodb.rule=Host(`${PROJECT_NAME}-nocodb.${GENERAL_URL}`)"
+  #        - "traefik.http.routers.nocodb.entrypoints=websecure"
+  #        - "traefik.http.routers.nocodb.tls.certresolver=myresolver"
+  #    depends_on:
+  #      - millverse-postgres
+  #    networks:
+  #      - dbstack
+# --------------------------------------------------------------------------------------------
+volumes:
+  nocodb:
+  postgres_data:
+
+networks:
+  dbstack:
+    name: "dbstack"
+    external: true
+# --------------------------------------------------------------------------------------------
+

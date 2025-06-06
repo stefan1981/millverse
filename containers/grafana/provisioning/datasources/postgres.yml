@@ -1,0 +1,28 @@
+apiVersion: 1
+
+deleteDatasources:
+  - name: postgresProvisioning
+    orgId: 1
+
+datasources:
+  - name: postgresProvisioning
+    type: postgres
+    access: direct
+    orgId: 1
+    url: $__env{PROJECT_NAME}-postgres:5432
+    user: $__env{POSTGRES_USER}
+    password: $__env{POSTGRES_PASSWORD}
+    database: $__env{POSTGRES_DATABASE}
+    basicAuth: false
+    isDefault: false
+    jsonData:
+      sslmode: disable         # can be 'require', 'verify-ca', 'verify-full'
+      maxOpenConns: 100
+      maxIdleConns: 10
+      connMaxLifetime: 14400   # in seconds (optional)
+      postgresVersion: 1200    # use 1200 for PostgreSQL 12, etc.
+      timescaledb: false       # set to true if using TimescaleDB
+    secureJsonData:
+      password: $__env{POSTGRES_PASSWORD}
+    version: 1
+    editable: true

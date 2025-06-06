@@ -1,0 +1,36 @@
+# GENERAL
+GENERAL_URL=localhost
+PROJECT_NAME=datastore
+
+# MariaDB
+# ---------------------------------------------------
+MYSQL_ROOT_PASSWORD=
+MYSQL_DATABASE=general
+MYSQL_USER=admin
+MYSQL_PASSWORD=
+
+# Clickhouse
+# ---------------------------------------------------
+# Inside container:
+# clickhouse-client
+CLICKHOUSE_DB=general
+CLICKHOUSE_USER=admin
+CLICKHOUSE_PASSWORD=
+
+#Postgres
+# ---------------------------------------------------
+POSTGRES_DATABASE=general
+POSTGRES_USER=admin
+POSTGRES_HOST=datastore-postgres
+POSTGRES_PASSWORD=
+
+# Qdrant
+# ---------------------------------------------------
+VECTORDB_HOST=http://datastore-qdrant
+VECTORDB_PORT=443
+VECTORDB_APIKEY=
+
+# Swagger-API
+# ---------------------------------------------------
+SWAGGER_API_KEY=
+ENABLE_AUTHORIZATION=true

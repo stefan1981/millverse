@@ -1,0 +1,14 @@
+apiVersion: 1
+datasources:
+- name: clickhouseProvisioning
+  type: grafana-clickhouse-datasource
+  jsonData:
+     defaultDatabase: $__env{CLICKHOUSE_DB}
+     port: 9000
+     server: $__env{PROJECT_NAME}-clickhouse
+     username: $__env{CLICKHOUSE_USER}
+     tlsSkipVerify: false
+  secureJsonData:
+    password: $__env{CLICKHOUSE_PASSWORD}
+  version: 1
+  editable: true

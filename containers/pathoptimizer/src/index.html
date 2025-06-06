@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Path Optimizer</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- jQuery + DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>    
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-family: sans-serif;
+        background: #111;
+        color: white;
+      }
+
+      #topDiv, #bottomDiv {
+        background-color: #444444;
+        padding: 10px;
+      }
+
+      #phasercontainer {
+        overflow: auto;
+        -webkit-overflow-scrolling: touch; /* momentum scrolling on iOS */
+        width: 100vw;  /* or your desired width */
+        
+        background: #060121;
+      }
+
+      #phasercontainer::-webkit-scrollbar {
+        width: 16px;
+        height: 16px;
+      }
+
+      #phasercontainer::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 8px;
+        border: 3px solid #060121;
+      }
+
+      #phasercontainer::-webkit-scrollbar-track {
+        background: #222;
+      }
+
+      canvas {
+        display: block;
+      }
+
+      #bottomDiv {
+        background-color: #444444;
+        padding: 10px;
+      }
+
+      #bottomDiv table {
+        font-family: monospace;
+        font-size: 14px;
+        background: #111;
+        color: white;
+        border: 1px solid #444;
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      #bottomDiv th, #bottomDiv td {
+        border: 1px solid #333;
+        padding: 6px 8px;
+        text-align: left;
+      }
+
+      #bottomDiv th {
+        background-color: #222;
+      }
+
+      /* Styling for controls */
+      .controls {
+        background-color: #333;
+        padding: 10px;
+        margin: 10px 0;
+      }
+      .controls input[type="checkbox"],
+      .controls input[type="range"] {
+        margin: 5px;
+      }
+
+      .controls label {
+        color: #fff;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="topDiv">
+      <h1><img src="img/logo.png" width="30" /> Path Optimizer</h1>
+
+      <!-- Simulation control -->
+      <details open>
+        <summary><span style="font-size: 1.5em; font-weight: bold;">🔧 Simulation Control</span></summary>
+        <div class="controls">
+          <br />
+        
+          <!-- <label for="speedSlider">Speed (Todo):</label>
+          <input type="range" id="speedSlider" min="200" max="5000" value="500" />
+          <hr /> -->
+          
+          <button id="buttonStopSimulation" width="50">⏸️ Pause</button>
+          <hr style="border: 2px solid #747474;" />
+
+
+
+          Walker:
+          <button id="buttonSpawnWalker1" width="50">+1</button>
+          <button id="buttonSpawnWalker5" width="50">+5</button>
+          <hr style="border: 2px solid #747474;" />
+
+          Incidents:
+          <button id="buttonSpawn1" width="50">+1</button>
+          <button id="buttonSpawn10">+10</button>
+          <button id="buttonSpawn100">+100</button>
+          <label>
+            <input type="checkbox" id="controlA" checked /> Auto spawn
+          </label>          
+          <hr style="border: 2px solid #747474;" />
+          
+
+          <label for="selectFloorplan">Floor:</label>
+          <select id="selectFloorplan">
+            <option value="floor1">Big</option>
+            <option value="floor2" selected>Medium</option>
+            <option value="floor3">Small</option>
+          </select>
+          
+          &nbsp;Size:
+          <button id="buttonIncreaseTileSize" width="50">+</button>
+          <button id="buttonDecreaseTileSize" width="50">-</button>
+
+          &nbsp;
+          <button id="buttonTileSizeAutoFit" width="50">AutoFit</button>
+
+
+          <hr style="border: 2px solid #747474;" />
+          
+        </div>
+        
+      </details>      
+    </div>
+
+    <div id="phasercontainer"></div>
+
+    <div id="bottomDiv">
+
+      <!-- Piecer status -->
+      <details open>
+        <summary><span style="font-size: 1.5em; font-weight: bold;">🚶‍♂️ Mover status (Piecer)</span></summary>     
+        <div style="flex: 1; min-width: 300px;">
+          <br />
+          <div style="max-height: 200px; overflow-y: auto;"> <!-- SCROLLABLE WRAPPER -->
+            <table id="moverStatus" class="display" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Status</th>                  
+                  <th>Steps</th>
+                  <th>Fixed<br />Incid.</th>
+                  <th>Steps<br />per Incid.</th>
+                  <th>Position<br />Current</th>
+                  <th>Position<br />Start/End</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Filled dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <hr style="border: 2px solid #747474;" />
+
+
+      <!-- Incident Status -->
+      <details open>
+        <summary><span style="font-size: 1.5em; font-weight: bold;">🧵 Incident status (Yarn break)</span></summary>     
+        <!-- Incident Table -->
+        <div style="flex: 1; min-width: 300px;">
+          <br />
+          <div style="max-height: 200px; overflow-y: auto;"> <!-- SCROLLABLE WRAPPER -->
+            <table id="incidentStatus" class="display" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>UUID</th>
+                  <th>Position</th>
+                  <th>locked</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Filled dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
