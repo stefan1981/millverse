@@ -24,8 +24,8 @@ const options = {
     ],
   },
   apis: [
-    './src/routes/routesPostgres.js',
     './src/routes/routesIncident.js',
+    './src/routes/routesPostgres.js',
     './src/routes/routesHealth.js',
   ], // Path to API docs (JSDoc comments)
 };

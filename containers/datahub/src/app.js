@@ -41,8 +41,8 @@ if (process.env.ENABLE_AUTHORIZATION !== 'false') {
 }
 
 // Use routes
-app.use('/postgres', routesPostgres);
 app.use('/incident', routesIncident);
+app.use('/postgres', routesPostgres);
 app.use('/health', routesHealth);
 
 // Swagger UI setup
