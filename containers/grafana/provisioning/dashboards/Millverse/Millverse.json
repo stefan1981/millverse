@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -315,21 +315,24 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 9,
+        "h": 3,
+        "w": 6,
         "x": 0,
         "y": 15
       },
       "id": 12,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -337,9 +340,9 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
       "pluginVersion": "11.2.0",
       "targets": [
@@ -351,8 +354,8 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "select min(time_to_repair)/1000 as \"Min repair time\" from incidents",
-          "refId": "Min repair time",
+          "rawSql": "select min(time_to_repair)/1000 as \"Minimum\" from incidents",
+          "refId": "Minimum",
           "sql": {
             "columns": [
               {
@@ -380,8 +383,8 @@
           "format": "table",
           "hide": false,
           "rawQuery": true,
-          "rawSql": "SELECT\n  AVG(time_to_repair) /1000 AS \"Avg. repair time\"\nFROM\n  incidents",
-          "refId": "Average repair time",
+          "rawSql": "SELECT\n  AVG(time_to_repair) /1000 AS \"Avgerage\"\nFROM\n  incidents",
+          "refId": "Average",
           "sql": {
             "columns": [
               {
@@ -409,8 +412,8 @@
           "format": "table",
           "hide": false,
           "rawQuery": true,
-          "rawSql": "select max(time_to_repair)/1000 as \"Max repair time\" from incidents",
-          "refId": "Max repair time",
+          "rawSql": "select max(time_to_repair)/1000 as \"Maximum\" from incidents",
+          "refId": "Maximum",
           "sql": {
             "columns": [
               {
@@ -431,7 +434,7 @@
         }
       ],
       "title": "Repair time (All time)",
-      "type": "gauge"
+      "type": "stat"
     },
     {
       "datasource": {
@@ -458,21 +461,24 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 9,
+        "h": 3,
+        "w": 6,
+        "x": 6,
         "y": 15
       },
       "id": 8,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "center",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -480,9 +486,9 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
       "pluginVersion": "11.2.0",
       "targets": [
@@ -574,7 +580,124 @@
         }
       ],
       "title": "Incidents count",
-      "type": "gauge"
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "grafana-postgresql-datasource",
+        "uid": "P9DC23A6E7A2EF39F"
+      },
+      "description": "The nuber of the open, the fixed, and the sum of all incidents",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 15
+      },
+      "id": 14,
+      "options": {
+        "displayLabels": [
+          "name",
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "P9DC23A6E7A2EF39F"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS \"open\" FROM incidents WHERE incident_fix IS NULL\n",
+          "refId": "open incidents",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "P9DC23A6E7A2EF39F"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS \"fixed\" FROM incidents WHERE incident_fix IS NOT NULL;",
+          "refId": "fixed incidents",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Incidents count",
+      "type": "piechart"
     },
     {
       "datasource": {
@@ -601,21 +724,24 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 9,
+        "h": 3,
+        "w": 6,
         "x": 0,
-        "y": 19
+        "y": 18
       },
       "id": 7,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -623,9 +749,9 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
       "pluginVersion": "11.2.0",
       "targets": [
@@ -638,8 +764,8 @@
           "format": "table",
           "hide": false,
           "rawQuery": true,
-          "rawSql": "select min(time_to_repair)/1000 as \"Min repair time\" from incidents\nWHERE $__timeFilter(incident_fix)",
-          "refId": "Min repair time",
+          "rawSql": "select min(time_to_repair)/1000 as \"Minimum\" from incidents\nWHERE $__timeFilter(incident_fix)",
+          "refId": "Minimum",
           "sql": {
             "columns": [
               {
@@ -666,8 +792,8 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  AVG(time_to_repair) /1000 AS \"Avg. repair time\"\nFROM\n  incidents\nWHERE\n  $__timeFilter(incident_fix)",
-          "refId": "Average repair time",
+          "rawSql": "SELECT\n  AVG(time_to_repair) /1000 AS \"Average\"\nFROM\n  incidents\nWHERE\n  $__timeFilter(incident_fix)",
+          "refId": "Average",
           "sql": {
             "columns": [
               {
@@ -695,8 +821,8 @@
           "format": "table",
           "hide": false,
           "rawQuery": true,
-          "rawSql": "select max(time_to_repair)/1000 as \"Max repair time\" from incidents\nWHERE $__timeFilter(incident_fix)",
-          "refId": "Max repair time",
+          "rawSql": "select max(time_to_repair)/1000 as \"Maximum\" from incidents\nWHERE $__timeFilter(incident_fix)",
+          "refId": "Maximum",
           "sql": {
             "columns": [
               {
@@ -717,7 +843,7 @@
         }
       ],
       "title": "Repair time (Selected Interval)",
-      "type": "gauge"
+      "type": "stat"
     },
     {
       "collapsed": true,
@@ -725,7 +851,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 21
       },
       "id": 13,
       "panels": [
@@ -752,8 +878,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -833,7 +958,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 22
       },
       "id": 5,
       "panels": [
@@ -860,8 +985,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -958,6 +1082,6 @@
   "timezone": "browser",
   "title": "Millverse",
   "uid": "ceo5ofd8dl9fkd",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
