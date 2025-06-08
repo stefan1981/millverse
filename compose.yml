@@ -11,8 +11,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DATABASE}
-    ports:
-      - "5432:5432"
+    #ports:
+    #  - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db-init-scripts/init-postgres:/docker-entrypoint-initdb.d
@@ -56,8 +56,8 @@ services:
       context: ./containers/pathoptimizer
       dockerfile: Dockerfile
     container_name: "${PROJECT_NAME}-pathoptimizer"
-    ports:
-      - "5173:5173"
+    #ports:
+    #  - "5173:5173"
     volumes: 
       - ./containers/pathoptimizer/package-lock.json:/app/package-lock.json
       - ./containers/pathoptimizer/package.json:/app/package.json
