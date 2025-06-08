@@ -43,9 +43,9 @@ services:
       #  - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/
     labels:
       traefik.enable: true
-      traefik.http.routers.grafana.rule: "Host(`${PROJECT_NAME}-grafana.${GENERAL_URL}`)"
-      traefik.http.routers.grafana.entrypoints: websecure
-      traefik.http.routers.grafana.tls.certresolver: myresolver
+      traefik.http.routers.millversegrafana.rule: "Host(`${PROJECT_NAME}-grafana.${GENERAL_URL}`)"
+      traefik.http.routers.millversegrafana.entrypoints: websecure
+      traefik.http.routers.millversegrafana.tls.certresolver: myresolver
     depends_on:
       - millverse-postgres
     networks:
