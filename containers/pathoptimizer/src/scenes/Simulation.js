@@ -241,7 +241,7 @@ export default class Simulation extends Phaser.Scene {
     
             if (confirmed) {
                 console.log("User confirmed: Resetting Mill...");
-                fetch('https://millverse-datahub.localhost/postgres/table-truncate?table=incidents', {
+                fetch(`https://millverse-datahub.${import.meta.env.VITE_GENERAL_URL}/postgres/table-truncate?table=incidents`, {
                     method: 'GET',
                     headers: {
                         'Accept': '*/*'
