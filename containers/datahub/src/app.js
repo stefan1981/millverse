@@ -34,7 +34,8 @@ app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 if (process.env.ENABLE_AUTHORIZATION !== 'false') {
   const excludedPaths = [
     '/incident/insert-incident',
-    '/incident/fix-incident'
+    '/incident/fix-incident',
+    '/postgres/table-truncate',
   ];
 
   app.use((req, res, next) => {
