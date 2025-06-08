@@ -32,10 +32,21 @@ app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Enable middleware only if ENABLE_AUTHORIZATION is set to "true"
 if (process.env.ENABLE_AUTHORIZATION !== 'false') {
+  const excludedPaths = [
+    '/incident/insert-incident'
+  ];
+
   app.use((req, res, next) => {
+    // Allow excluded paths without API key
+    if (excludedPaths.includes(req.path)) {
+      return next();
+    }
+
+    // Require API key for everything else
     if (req.header('x-api-key') !== process.env.SWAGGER_API_KEY) {
       return res.status(403).json({ error: 'Forbidden' });
     }
+
     next();
   });
 }
