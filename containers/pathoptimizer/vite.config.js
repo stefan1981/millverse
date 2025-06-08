@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   root: 'src',
   server: {
-    allowedHosts: ['mspace2.zahl1.de'],
+    allowedHosts: ['millverse-pathoptimizer.zahl1.de'],
     host: '0.0.0.0',
     port: 5173
   },
