@@ -91,7 +91,8 @@ export default class Incident {
 
         // ✅ Sende an deinen API-Endpunkt
         try {
-            const response = await fetch('https://millverse-datahub.localhost/incident/insert-incident', {
+            console.log("Using backend URL:", import.meta.env.VITE_GENERAL_URL);
+            const response = await fetch(`https://millverse-datahub.${import.meta.env.VITE_GENERAL_URL}/incident/insert-incident`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -127,7 +128,7 @@ export default class Incident {
 
                 
                 // Send fix-incident to backend
-                fetch('https://millverse-datahub.localhost/incident/fix-incident', {
+                fetch(`https://millverse-datahub.${import.meta.env.VITE_GENERAL_URL}/incident/fix-incident`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
