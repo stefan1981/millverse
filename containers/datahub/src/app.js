@@ -33,7 +33,8 @@ app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Enable middleware only if ENABLE_AUTHORIZATION is set to "true"
 if (process.env.ENABLE_AUTHORIZATION !== 'false') {
   const excludedPaths = [
-    '/incident/insert-incident'
+    '/incident/insert-incident',
+    '/incident/fix-incident'
   ];
 
   app.use((req, res, next) => {
