@@ -15,7 +15,7 @@ export default class Simulation extends Phaser.Scene {
 
         this.lastSpawnTime = 0;
         this.lastSearchTime = 0;
-        this.controlA = true;
+        this.autoSpawn = false;
 
         this.currentFloorplan = "floor2";
         this.controlRun = true;
@@ -53,6 +53,9 @@ export default class Simulation extends Phaser.Scene {
      */
     reInit(floorPlan) {
         this.children.removeAll(); // remove existing tiles
+        this.autoSpawn = false;
+        const autoSpawnCheckbox = document.getElementById('autoSpawn');
+        autoSpawnCheckbox.checked = false;
 
         this.basemap = new BaseMap(floorPlan);
         //this.tileSize = this.basemap.getTileSize();
@@ -64,8 +67,6 @@ export default class Simulation extends Phaser.Scene {
         this.movers = [];
         this.addMovers(4);
         this.incidents = new Incident(this, this.basemap.getMap(), this.tileSize);
-        // console.log(`loaded floorplan: ${floorPlan}`);
-        // console.log(`mapWidth: ${this.basemap.getWidth()} mapHeight: ${this.basemap.getHeight()}`);
         this.autoFitMapToScreen();
     }
 
@@ -128,7 +129,7 @@ export default class Simulation extends Phaser.Scene {
 
         // update incident
         if (this.time.now - this.lastSpawnTime >= 500) {
-            if (this.controlA) {
+            if (this.autoSpawn) {
                 this.incidents.createRandomIncident(this.tileSize);
                 this.lastSpawnTime = this.time.now;
             }
@@ -141,13 +142,9 @@ export default class Simulation extends Phaser.Scene {
     autoFitMapToScreen() {
         const mapWidthInTiles = this.basemap.getWidth();
         const screenWidth = window.innerWidth;
-
-        console.log(screenWidth, mapWidthInTiles);
     
         // Compute the largest tile size that fits within the screen width
         this.tileSize = Math.floor(screenWidth / mapWidthInTiles);
-
-        console.log(this.tileSize);
     
         // Redraw and resize everything
         this.basemap.drawMap(this, this.tileSize);
@@ -162,9 +159,53 @@ export default class Simulation extends Phaser.Scene {
      * Load the control elements from the HTML page.
      */
     loadControlElements() {
+        document.getElementById('speedInput').addEventListener('input', (event) => {
+            const newSpeed = parseInt(event.target.value, 10);
+            if (!isNaN(newSpeed)) {
+                // Update all movers speed
+                this.movers.forEach(mover => {
+                    mover.MILLISECONDS_PER_METER = newSpeed;
+                });
+                console.log(`Set new speed to ${newSpeed} ms/meter for all movers.`);
+            }
+        });
+
+        // Standard walking speed button listener
+        document.getElementById('buttonSetStandardSpeed').addEventListener('click', () => {
+            const standardSpeed = 700;
+            const speedInput = document.getElementById('speedInput');
+            speedInput.value = standardSpeed; // Set input value
+            this.movers.forEach(mover => {
+                mover.MILLISECONDS_PER_METER = standardSpeed;
+            });
+            console.log(`Reset speed to standard ${standardSpeed} ms/meter for all movers.`);
+        });
+
+        document.getElementById('speedRepair').addEventListener('input', (event) => {
+            const newRepair = parseInt(event.target.value, 10);
+            if (!isNaN(newRepair)) {
+                // Update all movers speed
+                this.movers.forEach(mover => {
+                    mover.MILLISECONDS_PER_REPAIR = newRepair;
+                });
+                console.log(`Set new repair-speed to ${newRepair} ms per incident.`);
+            }
+        });
+        
+        // Standard repair-speed button listener
+        document.getElementById('buttonSetStandardRepairSpeed').addEventListener('click', () => {
+            const standardSpeed = 2000;
+            const speedRepair = document.getElementById('speedRepair');
+            speedRepair.value = standardSpeed; // Set input value
+            this.movers.forEach(mover => {
+                mover.MILLISECONDS_PER_REPAIR = standardSpeed;
+            });
+            console.log(`Reset repair-speed to standard ${standardSpeed} ms per incident.`);
+        });
+
         // Set up event listeners for the controls
-        document.getElementById('controlA').addEventListener('change', (event) => {
-            this.controlA = event.target.checked;
+        document.getElementById('autoSpawn').addEventListener('change', (event) => {
+            this.autoSpawn = event.target.checked;
         });
         // document.getElementById('speedSlider').addEventListener('input', (event) => {
         //     this.speed = event.target.value;
@@ -174,8 +215,55 @@ export default class Simulation extends Phaser.Scene {
             this.controlRun = !this.controlRun;
             event.target.textContent = this.controlRun ? '⏸️ Pause' : '▶️ Play';
         });
+        document.getElementById('buttonResetMill').addEventListener('click', (event) => {
+            const confirmed = confirm("Resetting the Mill will remove all Movers and Incidents. Are you sure?");
+    
+            if (confirmed) {
+                console.log("User confirmed: Resetting Mill...");
+                this.reInit(this.currentFloorplan);
+
+                // // Call your reset function here
+                // // Clear Movers
+                // this.movers.forEach(mover => {
+                //     mover.destroy(); // Remove graphics from scene
+                // });
+                // this.movers = [];
+
+                // // Clear Incidents
+                // this.incidents.clearAll(); // We'll implement this below
+            } else {
+                console.log("User cancelled.");
+            }
+
+        });
+        document.getElementById('buttonResetDatabase').addEventListener('click', (event) => {
+            const confirmed = confirm("Resetting The Database will truncate the whole Database. Are you sure?");
+    
+            if (confirmed) {
+                console.log("User confirmed: Resetting Mill...");
+                fetch('https://millverse-datahub.localhost/postgres/table-truncate?table=incidents', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': '*/*'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text(); // or response.json() if you expect JSON
+                })
+                .then(data => {
+                    console.log("Database reset response:", data);
+                })
+                .catch(error => {
+                    console.error("Error resetting database:", error);
+                });
+            } else {
+                console.log("User cancelled.");
+            }
+        });
         document.getElementById('buttonIncreaseTileSize').addEventListener('click', (event) => {
-            console.log("increase tile size");
             this.tileSize += 1;
             this.basemap.drawMap(this, this.tileSize);
             this.resizeCanvas();
@@ -219,7 +307,6 @@ export default class Simulation extends Phaser.Scene {
         });
         document.getElementById('selectFloorplan').addEventListener('change', (event) => {
             const selectedValue = event.target.value;
-            console.log('Selected value:', selectedValue);
             this.currentFloorplan = selectedValue;
             this.reInit(this.currentFloorplan);
             this.autoFitMapToScreen();

@@ -13,7 +13,7 @@ export default class Mover {
         this.tileSize = tileSize;
         this.pathColor = this.getRandomColor();
 
-        this.MILLISECONDS_PER_METER = 100;
+        this.MILLISECONDS_PER_METER = 700;
         this.MILLISECONDS_PER_REPAIR = 2000;
 
         this.lastIdleCheck = 0;
@@ -214,6 +214,29 @@ export default class Mover {
             .setStrokeStyle(2, 0x330000)
             .setDepth(2);
         this.pathGraphics.push(endCircle);
+    }
+
+    destroy() {
+        // Destroy the main circle sprite
+        if (this.circle && this.circle.destroy) {
+            this.circle.destroy();
+        }
+    
+        // Destroy all path graphics
+        for (const shape of this.pathGraphics) {
+            if (shape && shape.destroy) {
+                shape.destroy();
+            }
+        }
+        this.pathGraphics = [];
+    
+        // Optional: nullify other references
+        this.scene = null;
+        this.map = null;
+        this.curr = null;
+        this.start = null;
+        this.end = null;
+        this.path = null;
     }
 
     /**

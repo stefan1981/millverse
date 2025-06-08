@@ -267,7 +267,36 @@
           "format": "table",
           "rawQuery": true,
           "rawSql": "SELECT\n  date_trunc('minute', incident_start) AS time,\n  COUNT(*) AS incident_count\nFROM\n  incidents\nGROUP BY\n  time\nORDER BY\n  time ASC;",
-          "refId": "A",
+          "refId": "Minute",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "P9DC23A6E7A2EF39F"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT\n  date_trunc('seconds', incident_start) AS time,\n  COUNT(*) AS incident_count\nFROM\n  incidents\nGROUP BY\n  time\nORDER BY\n  time ASC;",
+          "refId": "Seconds",
           "sql": {
             "columns": [
               {

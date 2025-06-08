@@ -10,6 +10,7 @@
         5.  2025.06.06 14:30 - 15:30  (1h)    Initiales Container Setup, Grafana / DB / Simulation
         6.  2025.06.06 17:30 - 19:45  (2.25h) DB table setup and dashboard setup
         7.  2025.06.07 11:15 - 12:15  (1h)    Atted new metrics to dashboard
+        8.  2025.06.08 14:00 - 15:00  (1h)    Implemented moving speed / repair speed / reset mill / reset db
 2.  Konkrete Todo's
     1.  ✅ Erstellen eines Github Repositories (von 2025.06.06 14:30)
     2.  ✅ Bereitstellung Postgres (containerisiert)
@@ -19,4 +20,4 @@
         1.  ✅ Init funktion to create relevant database (von 2025.06.06 17:30)
         2.  ✅ implement endpoints create-incident, fix-incident
         3.  ✅ dashboard in grafana established with some basic kpis (bis 2025.06.06 19:45)
-        4.  
+        4.  ✅ moving speed / repair speed / reset mill / reset db
